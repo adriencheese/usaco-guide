@@ -5,6 +5,28 @@
 #include<vector>
 using namespace std;
 
+vector<pair<int, int>> road;
+vector<string> seg;
+
+int preMin = 0;
+int m
+int preMaximum(int n) {
+    if(seg[n+1]=="none") {
+        return max(preMaximum(n+1), maxLow);
+    }
+    else {
+        return 1;
+    }
+}
+
+int preMinimum(int n) {
+    if(seg[n+1]=="none") {
+        return max(preMinimum(n+1), maxLow);
+    }
+    else {
+        return 1;
+    }
+}
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -12,27 +34,40 @@ int main() {
     // freopen("traffic.in", "r", stdin);
     // freopen("traffic.out", "w", stdout);
     int n; cin >> n;
-    vector<pair<int, int>> road;
-    vector<string> seg;
 
     cout << "test" << endl;
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < n; i++) {
         string segment; cin >> segment;
         pair<int, int> range; cin >> range.first >> range.second;
 
-        cout << "test3" << endl;
-        
         seg.push_back(segment);
 
-        cout << seg[i] << endl;
-
         road.push_back(range);
-
-        cout << "test4" << endl;
     }
+
+    // print through vectors
+    // for (int i = 0; i < road.size(); i++) {
+    //     cout << road[i].first << ", " << road[i].second << endl;
+    // }
+    
+    int preLower, postLower = 0;
 
     for (int i = 0; i < road.size(); i++) {
-        cout << road[i].first << ", " << road[i].second << endl;
+        if (seg[i]=="on") {
+            preLower -= road[i].first;
+            postLower -= road[i].second;
+        }
+
+        else if (seg[i]=="none") {
+            preMaximum(i);
+        }
+
+        else {
+            preLower += road[i].first;
+            postLower += road[i].second;
+        }
     }
+
 }
+
